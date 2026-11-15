@@ -79,34 +79,38 @@
     </section>
     <footer><p><strong>Instituto CEIFA</strong> — Plantando Cristo, colhendo vidas.</p></footer>
     <script>
-        const textoCompartilhamento = "Faça você também parte dessa missão! Conheça e contribua com o Gotas do Vale: ";
         const urlPagina = "https://cleidsonsferreira-maker.github.io/Gotas-dos-Vale/";
         const urlImagem = new URL("criancas-fundo.jpg", window.location.href).href;
+
         function marcarCopiado() {
             const botao = document.getElementById("copyBtn");
             const textoBotao = document.getElementById("btnText");
             botao.classList.add("copied"); textoBotao.innerText = "Código Pix Copiado!";
             setTimeout(() => { botao.classList.remove("copied"); textoBotao.innerText = "Copiar Código Pix"; }, 3500);
         }
+
         function copiaAlternativa(texto) {
             const areaTexto = document.createElement("textarea"); areaTexto.value = texto;
             areaTexto.setAttribute("readonly", ""); areaTexto.style.position = "fixed"; areaTexto.style.opacity = "0";
             document.body.appendChild(areaTexto); areaTexto.select(); areaTexto.setSelectionRange(0, texto.length);
             document.execCommand("copy"); document.body.removeChild(areaTexto); marcarCopiado();
         }
+
         function copiarPix() {
             const codigoPix = document.getElementById("pixCode").innerText.trim();
             if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(codigoPix).then(marcarCopiado).catch(() => copiaAlternativa(codigoPix));
             else copiaAlternativa(codigoPix);
         }
+
         async function obterArquivoImagem() {
             const resposta = await fetch(urlImagem);
             if (!resposta.ok) throw new Error("Não foi possível carregar a imagem.");
             const blob = await resposta.blob();
             return new File([blob], "criancas-fundo.jpg", { type: blob.type || "image/jpeg" });
         }
+
         async function compartilharWhatsApp() {
-            const mensagem = `${textoCompartilhamento}${urlPagina}`;
+            const mensagem = urlPagina;
             try {
                 const arquivo = await obterArquivoImagem();
                 if (navigator.share && navigator.canShare && navigator.canShare({ files: [arquivo] })) {
@@ -122,8 +126,9 @@
             window.open(`https://wa.me/?text=${encodeURIComponent(mensagem)}`, "_blank", "noopener,noreferrer");
             alert("Este navegador não permite anexar a imagem automaticamente. A imagem foi baixada; anexe criancas-fundo.jpg à conversa do WhatsApp.");
         }
+
         async function compartilharInstagram() {
-            const legenda = `${textoCompartilhamento}${urlPagina}`;
+            const legenda = urlPagina;
             try {
                 const arquivo = await obterArquivoImagem();
                 if (navigator.canShare && navigator.canShare({ files: [arquivo] }) && navigator.share) {
@@ -134,7 +139,7 @@
             linkDownload.download = "criancas-fundo.jpg"; document.body.appendChild(linkDownload); linkDownload.click(); linkDownload.remove();
             if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(legenda).catch(() => {});
             window.open("https://www.instagram.com/", "_blank", "noopener,noreferrer");
-            alert("A imagem foi baixada. A legenda com o link foi copiada quando permitido; cole-a na publicação do Instagram.");
+            alert("A imagem foi baixada. O link foi copiado quando permitido; cole-o na publicação do Instagram.");
         }
     </script>
 </body>
