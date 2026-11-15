@@ -120,34 +120,18 @@
             return copiou;
         }
 
-        async function obterArquivoImagem() {
-            const resposta = await fetch(urlImagem);
-            if (!resposta.ok) throw new Error("Não foi possível carregar a imagem.");
-            const blob = await resposta.blob();
-            return new File([blob], "criancas-fundo.jpg", { type: blob.type || "image/jpeg" });
-        }
-
         async function compartilharWhatsApp() {
             const mensagem = urlPagina;
-            try {
-                const arquivo = await obterArquivoImagem();
-                if (navigator.share && navigator.canShare && navigator.canShare({ files: [arquivo] })) {
-                    await navigator.share({ files: [arquivo], text: mensagem, title: "Doações Gotas do Vale" });
-                    return;
-                }
-            } catch (erro) {
-                if (erro.name === "AbortError") return;
-            }
-            const baixar = document.createElement("a");
-            baixar.href = urlImagem; baixar.download = "criancas-fundo.jpg";
-            document.body.appendChild(baixar); baixar.click(); baixar.remove();
             window.open(`https://wa.me/?text=${encodeURIComponent(mensagem)}`, "_blank", "noopener,noreferrer");
-            alert("Este navegador não permite anexar a imagem automaticamente. A imagem foi baixada; anexe criancas-fundo.jpg à conversa do WhatsApp.");
         }
 
         async function compartilharInstagram() {
+            const confirmar = window.confirm("Após clicar em OK, o link da página será copiado. Depois, basta colá-lo na legenda do Instagram. A imagem será baixada para anexar à publicação.");
+            if (!confirmar) return;
+
             const janelaInstagram = window.open("https://www.instagram.com/", "_blank");
             const linkCopiado = await copiarLinkCompartilhamento();
+
             const linkDownload = document.createElement("a");
             linkDownload.href = urlImagem;
             linkDownload.download = "criancas-fundo.jpg";
@@ -155,10 +139,9 @@
             linkDownload.click();
             linkDownload.remove();
 
-            const aviso = linkCopiado
-                ? "O link foi copiado. Cole-o no campo da legenda do Instagram. A imagem foi baixada para você anexá-la à publicação."
-                : "A imagem foi baixada. Copie este link e cole-o no campo da legenda do Instagram: " + urlPagina;
-            alert(aviso);
+            if (!linkCopiado) {
+                alert("Não foi possível copiar automaticamente. Copie este link e cole-o na legenda do Instagram: " + urlPagina);
+            }
 
             if (!janelaInstagram) {
                 window.location.href = "https://www.instagram.com/";
