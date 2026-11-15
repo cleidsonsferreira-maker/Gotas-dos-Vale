@@ -30,17 +30,15 @@
         .donate { padding: 20px 20px 60px; display: flex; justify-content: center; }
         .donation-card { width: 100%; max-width: 520px; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 28px; padding: 34px 26px; text-align: center; box-shadow: 0 18px 50px rgba(0,0,0,0.25); }
         .donation-card h2 { font-size: 1.6rem; font-weight: 900; color: var(--text); }
-        .donation-card p { color: var(--muted); margin: 6px 0 22px; }
-        .qr-wrapper { background: #fff; padding: 14px; border: 3px dashed var(--orange); border-radius: 20px; display: inline-block; margin-bottom: 22px; }
-        .qr-wrapper img { width: 220px; height: 220px; display: block; }
+        .qr-wrapper { background: #fff; padding: 10px; border: 3px dashed var(--orange); border-radius: 18px; display: inline-block; margin: 16px 0 18px; }
+        .qr-wrapper img { width: 150px; height: 150px; display: block; }
         .pix-label { display: block; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
         .pix-box { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 12px; padding: 12px 15px; font-size: 0.8rem; color: #495057; word-break: break-all; margin-bottom: 18px; user-select: all; text-align: left; }
         .btn-copy { background: var(--orange); color: #fff; border: none; padding: 16px 32px; font-family: inherit; font-size: 1.05rem; font-weight: 800; border-radius: 50px; cursor: pointer; width: 100%; max-width: 360px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.25s ease; box-shadow: 0 6px 20px rgba(232,122,20,0.35); }
         .btn-copy:hover { background: var(--orange-dark); transform: translateY(-2px); }
         .btn-copy.copied { background: var(--green); box-shadow: 0 6px 20px rgba(22,163,74,0.35); }
         .share-section { margin-top: 30px; padding-top: 24px; border-top: 1px solid #e5e7eb; }
-        .share-section h3 { font-size: 1.25rem; font-weight: 900; color: var(--text); }
-        .share-section p { margin-bottom: 16px; }
+        .share-section h3 { font-size: 1.25rem; font-weight: 900; color: var(--text); margin-bottom: 16px; }
         .share-actions { display: flex; flex-direction: column; align-items: center; gap: 12px; }
         .btn-share { text-decoration: none; }
         footer { text-align: center; padding: 0 20px 30px; color: #fff; font-size: 0.9rem; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
@@ -50,7 +48,7 @@
             .bg { background: url("criancas-fundo.jpg") center top / 100% auto no-repeat, linear-gradient(to bottom,#f7c99a 0%,var(--meadow) 45%,var(--meadow-dark) 100%); }
             .hero { min-height: auto; padding-top: calc(85.4vw - 40px); }
         }
-        @media (max-width: 480px) { .headline { padding: 18px 20px 20px; } .qr-wrapper img { width: 190px; height: 190px; } }
+        @media (max-width: 480px) { .headline { padding: 18px 20px 20px; } .qr-wrapper img { width: 130px; height: 130px; } }
         @media (prefers-reduced-motion: reduce) { .headline, .btn-doar svg { animation: none; } }
     </style>
 </head>
@@ -66,14 +64,12 @@
     <section class="donate" id="doar">
         <div class="donation-card">
             <h2>Contribua via Pix</h2>
-            <p>Aponte a câmera do seu celular para o QR Code abaixo ou copie o código Pix.</p>
-            <div class="qr-wrapper"><img src="qrcode-pix.jpeg" alt="QR Code Pix Instituto CEIFA" width="220" height="220"></div>
+            <div class="qr-wrapper"><img src="qrcode-pix.jpeg" alt="QR Code Pix Instituto CEIFA" width="150" height="150"></div>
             <span class="pix-label">Pix copia e cola</span>
             <div class="pix-box" id="pixCode">00020126460014br.gov.bcb.pix0124institutoceifa@gmail.com5204000053039865802BR5915INSTITUTO_CEIFA6006Itinga610939610-00062150511GotasdoVale63042FE3</div>
             <button class="btn-copy" id="copyBtn" onclick="copiarPix()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><span id="btnText">Copiar Código Pix</span></button>
             <div class="share-section">
                 <h3>Compartilhe essa missão</h3>
-                <p>Convide mais pessoas para fazer parte do Gotas do Vale.</p>
                 <div class="share-actions">
                     <button class="btn-copy btn-share" type="button" onclick="compartilharWhatsApp()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5z"></path></svg>Compartilhar no WhatsApp</button>
                     <button class="btn-copy btn-share" type="button" onclick="compartilharInstagram()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="18" cy="6" r=".5" fill="currentColor"></circle></svg>Compartilhar no Instagram</button>
@@ -85,6 +81,7 @@
     <script>
         const textoCompartilhamento = "Faça você também parte dessa missão! Conheça e contribua com o Gotas do Vale: ";
         const urlPagina = "https://cleidsonsferreira-maker.github.io/Gotas-dos-Vale/";
+        const urlImagem = new URL("criancas-fundo.jpg", window.location.href).href;
         function marcarCopiado() {
             const botao = document.getElementById("copyBtn");
             const textoBotao = document.getElementById("btnText");
@@ -102,22 +99,38 @@
             if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(codigoPix).then(marcarCopiado).catch(() => copiaAlternativa(codigoPix));
             else copiaAlternativa(codigoPix);
         }
-        function compartilharWhatsApp() {
+        async function obterArquivoImagem() {
+            const resposta = await fetch(urlImagem);
+            if (!resposta.ok) throw new Error("Não foi possível carregar a imagem.");
+            const blob = await resposta.blob();
+            return new File([blob], "criancas-fundo.jpg", { type: blob.type || "image/jpeg" });
+        }
+        async function compartilharWhatsApp() {
             const mensagem = `${textoCompartilhamento}${urlPagina}`;
+            try {
+                const arquivo = await obterArquivoImagem();
+                if (navigator.share && navigator.canShare && navigator.canShare({ files: [arquivo] })) {
+                    await navigator.share({ files: [arquivo], text: mensagem, title: "Doações Gotas do Vale" });
+                    return;
+                }
+            } catch (erro) {
+                if (erro.name === "AbortError") return;
+            }
+            const baixar = document.createElement("a");
+            baixar.href = urlImagem; baixar.download = "criancas-fundo.jpg";
+            document.body.appendChild(baixar); baixar.click(); baixar.remove();
             window.open(`https://wa.me/?text=${encodeURIComponent(mensagem)}`, "_blank", "noopener,noreferrer");
+            alert("Este navegador não permite anexar a imagem automaticamente. A imagem foi baixada; anexe criancas-fundo.jpg à conversa do WhatsApp.");
         }
         async function compartilharInstagram() {
             const legenda = `${textoCompartilhamento}${urlPagina}`;
             try {
-                const resposta = await fetch("criancas-fundo.jpg");
-                if (!resposta.ok) throw new Error("Não foi possível carregar a imagem.");
-                const imagem = await resposta.blob();
-                const arquivo = new File([imagem], "criancas-fundo.jpg", { type: imagem.type || "image/jpeg" });
+                const arquivo = await obterArquivoImagem();
                 if (navigator.canShare && navigator.canShare({ files: [arquivo] }) && navigator.share) {
                     await navigator.share({ files: [arquivo], text: legenda, title: "Doações Gotas do Vale" }); return;
                 }
             } catch (erro) { if (erro.name === "AbortError") return; }
-            const linkDownload = document.createElement("a"); linkDownload.href = "criancas-fundo.jpg";
+            const linkDownload = document.createElement("a"); linkDownload.href = urlImagem;
             linkDownload.download = "criancas-fundo.jpg"; document.body.appendChild(linkDownload); linkDownload.click(); linkDownload.remove();
             if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(legenda).catch(() => {});
             window.open("https://www.instagram.com/", "_blank", "noopener,noreferrer");
