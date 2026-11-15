@@ -42,6 +42,12 @@
         .share-actions { display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 10px; }
         .share-actions .btn-copy { width: auto; min-width: 150px; max-width: 180px; }
         .btn-share { text-decoration: none; }
+        .share-modal { position: fixed; inset: 0; z-index: 10; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(0,0,0,0.55); }
+        .share-modal.is-open { display: flex; }
+        .share-modal-card { width: 100%; max-width: 400px; padding: 28px 24px; border-radius: 22px; background: #fff; text-align: center; box-shadow: 0 18px 50px rgba(0,0,0,0.3); }
+        .share-modal-card h2 { margin-bottom: 8px; font-size: 1.35rem; font-weight: 900; }
+        .share-modal-card p { margin-bottom: 20px; color: var(--muted); }
+        .share-modal-card .btn-copy { max-width: 100%; }
         footer { text-align: center; padding: 0 20px 30px; color: #fff; font-size: 0.9rem; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
         @keyframes subir { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
         @keyframes pular { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
@@ -78,11 +84,18 @@
                 <h3>Compartilhe</h3>
                 <div class="share-actions">
                     <button class="btn-copy btn-share" type="button" onclick="compartilharWhatsApp()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M21 11.5a8.4 8.4 0 0 1-.9 3.8 8.5 8.5 0 0 1-7.6 4.7 8.4 8.4 0 0 1-3.8-.9L3 21l1.9-5.7a8.4 8.4 0 0 1-.9-3.8 8.5 8.5 0 0 1 4.7-7.6 8.4 8.4 0 0 1 3.8-.9h.5a8.5 8.5 0 0 1 8 8v.5z"></path></svg>WhatsApp</button>
-                    <button class="btn-copy btn-share" type="button" onclick="compartilharInstagram()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="18" cy="6" r=".5" fill="currentColor"></circle></svg>Instagram</button>
+                    <button class="btn-copy btn-share" type="button" onclick="prepararCompartilhamentoInstagram()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="18" cy="6" r=".5" fill="currentColor"></circle></svg>Instagram</button>
                 </div>
             </div>
         </div>
     </section>
+    <div class="share-modal" id="instagramModal" role="dialog" aria-modal="true" aria-labelledby="instagramModalTitle" aria-describedby="instagramModalMessage">
+        <div class="share-modal-card">
+            <h2 id="instagramModalTitle">Link copiado!</h2>
+            <p id="instagramModalMessage">O link da página já foi copiado. Clique em OK para baixar a imagem e abrir o Instagram. Depois, cole o link na legenda da publicação.</p>
+            <button class="btn-copy" type="button" onclick="confirmarCompartilhamentoInstagram()">OK</button>
+        </div>
+    </div>
     <footer><p><strong>Instituto CEIFA</strong> — Plantando Cristo, colhendo vidas.</p></footer>
     <script>
         const urlPagina = "https://cleidsonsferreira-maker.github.io/Gotas-dos-Vale/";
@@ -99,54 +112,59 @@
             const areaTexto = document.createElement("textarea"); areaTexto.value = texto;
             areaTexto.setAttribute("readonly", ""); areaTexto.style.position = "fixed"; areaTexto.style.opacity = "0";
             document.body.appendChild(areaTexto); areaTexto.select(); areaTexto.setSelectionRange(0, texto.length);
-            document.execCommand("copy"); document.body.removeChild(areaTexto); marcarCopiado();
+            const copiou = document.execCommand("copy"); document.body.removeChild(areaTexto);
+            return copiou;
         }
 
         function copiarPix() {
             const codigoPix = document.getElementById("pixCode").innerText.trim();
-            if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(codigoPix).then(marcarCopiado).catch(() => copiaAlternativa(codigoPix));
-            else copiaAlternativa(codigoPix);
+            if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(codigoPix).then(marcarCopiado).catch(() => { copiaAlternativa(codigoPix); marcarCopiado(); });
+            else { copiaAlternativa(codigoPix); marcarCopiado(); }
         }
 
         async function copiarLinkCompartilhamento() {
             if (navigator.clipboard && window.isSecureContext) {
                 try { await navigator.clipboard.writeText(urlPagina); return true; } catch (erro) {}
             }
-            const campo = document.createElement("textarea");
-            campo.value = urlPagina; campo.setAttribute("readonly", "");
-            campo.style.position = "fixed"; campo.style.opacity = "0";
-            document.body.appendChild(campo); campo.select(); campo.setSelectionRange(0, urlPagina.length);
-            const copiou = document.execCommand("copy"); document.body.removeChild(campo);
-            return copiou;
+            return copiaAlternativa(urlPagina);
         }
 
         async function compartilharWhatsApp() {
-            const mensagem = urlPagina;
-            window.open(`https://wa.me/?text=${encodeURIComponent(mensagem)}`, "_blank", "noopener,noreferrer");
+            window.open(`https://wa.me/?text=${encodeURIComponent(urlPagina)}`, "_blank", "noopener,noreferrer");
         }
 
-        async function compartilharInstagram() {
-            const confirmar = window.confirm("Após clicar em OK, o link da página será copiado. Depois, basta colá-lo na legenda do Instagram. A imagem será baixada para anexar à publicação.");
-            if (!confirmar) return;
-
-            const janelaInstagram = window.open("https://www.instagram.com/", "_blank");
+        async function prepararCompartilhamentoInstagram() {
             const linkCopiado = await copiarLinkCompartilhamento();
+            const modal = document.getElementById("instagramModal");
+            document.getElementById("instagramModalTitle").innerText = linkCopiado ? "Link copiado!" : "Copie o link da página";
+            document.getElementById("instagramModalMessage").innerText = linkCopiado
+                ? "O link da página já foi copiado. Clique em OK para baixar a imagem e abrir o Instagram. Depois, cole o link na legenda da publicação."
+                : `Não foi possível copiar automaticamente. Copie este link: ${urlPagina} Depois, clique em OK para baixar a imagem e abrir o Instagram.`;
+            modal.classList.add("is-open");
+            document.querySelector("#instagramModal button").focus();
+        }
 
+        function fecharPopupInstagram() {
+            document.getElementById("instagramModal").classList.remove("is-open");
+        }
+
+        function confirmarCompartilhamentoInstagram() {
+            fecharPopupInstagram();
             const linkDownload = document.createElement("a");
             linkDownload.href = urlImagem;
             linkDownload.download = "criancas-fundo.jpg";
             document.body.appendChild(linkDownload);
             linkDownload.click();
             linkDownload.remove();
-
-            if (!linkCopiado) {
-                alert("Não foi possível copiar automaticamente. Copie este link e cole-o na legenda do Instagram: " + urlPagina);
-            }
-
-            if (!janelaInstagram) {
-                window.location.href = "https://www.instagram.com/";
-            }
+            window.open("https://www.instagram.com/", "_blank", "noopener,noreferrer");
         }
+
+        document.getElementById("instagramModal").addEventListener("click", (evento) => {
+            if (evento.target.id === "instagramModal") fecharPopupInstagram();
+        });
+        document.addEventListener("keydown", (evento) => {
+            if (evento.key === "Escape") fecharPopupInstagram();
+        });
     </script>
 </body>
 </html>
