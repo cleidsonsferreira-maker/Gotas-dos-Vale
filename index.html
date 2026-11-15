@@ -51,16 +51,8 @@
         footer { text-align: center; padding: 0 20px 30px; color: #fff; font-size: 0.9rem; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
         @keyframes subir { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
         @keyframes pular { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
-        @media (max-aspect-ratio: 1/1) {
-            .bg { background: url("criancas-fundo.jpg") center top / 100% auto no-repeat, linear-gradient(to bottom,#f7c99a 0%,var(--meadow) 45%,var(--meadow-dark) 100%); }
-            .hero { min-height: auto; padding-top: calc(85.4vw - 40px); }
-        }
-        @media (max-width: 480px) {
-            .headline { padding: 18px 20px 20px; }
-            .qr-wrapper img { width: 130px; height: 130px; }
-            .share-actions { flex-direction: column; }
-            .share-actions .btn-copy { width: 100%; max-width: 320px; }
-        }
+        @media (max-aspect-ratio: 1/1) { .bg { background: url("criancas-fundo.jpg") center top / 100% auto no-repeat, linear-gradient(to bottom,#f7c99a 0%,var(--meadow) 45%,var(--meadow-dark) 100%); } .hero { min-height: auto; padding-top: calc(85.4vw - 40px); } }
+        @media (max-width: 480px) { .headline { padding: 18px 20px 20px; } .qr-wrapper img { width: 130px; height: 130px; } .share-actions { flex-direction: column; } .share-actions .btn-copy { width: 100%; max-width: 320px; } }
         @media (prefers-reduced-motion: reduce) { .headline, .btn-doar svg { animation: none; } }
     </style>
 </head>
@@ -91,15 +83,17 @@
     </section>
     <div class="share-modal" id="instagramModal" role="dialog" aria-modal="true" aria-labelledby="instagramModalTitle" aria-describedby="instagramModalMessage">
         <div class="share-modal-card">
-            <h2 id="instagramModalTitle">Link copiado!</h2>
-            <p id="instagramModalMessage">O link da página já foi copiado. Clique em OK para baixar a imagem e abrir o Instagram. Depois, cole o link na legenda da publicação.</p>
-            <button class="btn-copy" type="button" onclick="confirmarCompartilhamentoInstagram()">OK</button>
+            <h2 id="instagramModalTitle">Compartilhar no Instagram</h2>
+            <p id="instagramModalMessage">Toque em OK para copiar o link e abrir o compartilhamento da imagem. Na lista de apps, escolha Instagram.</p>
+            <button class="btn-copy" id="instagramOkButton" type="button" onclick="confirmarCompartilhamentoInstagram()">OK</button>
         </div>
     </div>
     <footer><p><strong>Instituto CEIFA</strong> — Plantando Cristo, colhendo vidas.</p></footer>
     <script>
         const urlPagina = "https://cleidsonsferreira-maker.github.io/Gotas-dos-Vale/";
         const urlImagem = new URL("criancas-fundo.jpg", window.location.href).href;
+        let arquivoImagemParaCompartilhar = null;
+        let erroPreparacaoImagem = false;
 
         function marcarCopiado() {
             const botao = document.getElementById("copyBtn");
@@ -122,41 +116,74 @@
             else { copiaAlternativa(codigoPix); marcarCopiado(); }
         }
 
-        async function copiarLinkCompartilhamento() {
-            if (navigator.clipboard && window.isSecureContext) {
-                try { await navigator.clipboard.writeText(urlPagina); return true; } catch (erro) {}
+        async function prepararCompartilhamentoInstagram() {
+            const modal = document.getElementById("instagramModal");
+            const mensagem = document.getElementById("instagramModalMessage");
+            const botaoOk = document.getElementById("instagramOkButton");
+            botaoOk.disabled = true;
+            mensagem.innerText = "Preparando a imagem para compartilhar...";
+            modal.classList.add("is-open");
+            botaoOk.focus();
+            arquivoImagemParaCompartilhar = null;
+            erroPreparacaoImagem = false;
+
+            try {
+                const resposta = await fetch(urlImagem);
+                if (!resposta.ok) throw new Error("Falha ao carregar imagem");
+                const imagem = await resposta.blob();
+                const arquivo = new File([imagem], "criancas-fundo.jpg", { type: imagem.type || "image/jpeg" });
+                if (!navigator.share || !navigator.canShare || !navigator.canShare({ files: [arquivo] })) {
+                    throw new Error("Compartilhamento de arquivos não suportado neste navegador");
+                }
+                arquivoImagemParaCompartilhar = arquivo;
+                mensagem.innerText = "Toque em OK para copiar o link e abrir o compartilhamento da imagem. Na lista de apps, escolha Instagram.";
+            } catch (erro) {
+                erroPreparacaoImagem = true;
+                mensagem.innerText = "Este navegador não permite compartilhar a imagem diretamente. Tente em um navegador compatível com compartilhamento de arquivos.";
+            } finally {
+                botaoOk.disabled = false;
             }
-            return copiaAlternativa(urlPagina);
         }
 
         async function compartilharWhatsApp() {
             window.open(`https://wa.me/?text=${encodeURIComponent(urlPagina)}`, "_blank", "noopener,noreferrer");
         }
 
-        async function prepararCompartilhamentoInstagram() {
-            const linkCopiado = await copiarLinkCompartilhamento();
-            const modal = document.getElementById("instagramModal");
-            document.getElementById("instagramModalTitle").innerText = linkCopiado ? "Link copiado!" : "Copie o link da página";
-            document.getElementById("instagramModalMessage").innerText = linkCopiado
-                ? "O link da página já foi copiado. Clique em OK para baixar a imagem e abrir o Instagram. Depois, cole o link na legenda da publicação."
-                : `Não foi possível copiar automaticamente. Copie este link: ${urlPagina} Depois, clique em OK para baixar a imagem e abrir o Instagram.`;
-            modal.classList.add("is-open");
-            document.querySelector("#instagramModal button").focus();
-        }
-
         function fecharPopupInstagram() {
             document.getElementById("instagramModal").classList.remove("is-open");
         }
 
-        function confirmarCompartilhamentoInstagram() {
+        async function confirmarCompartilhamentoInstagram() {
             fecharPopupInstagram();
-            const linkDownload = document.createElement("a");
-            linkDownload.href = urlImagem;
-            linkDownload.download = "criancas-fundo.jpg";
-            document.body.appendChild(linkDownload);
-            linkDownload.click();
-            linkDownload.remove();
-            window.open("https://www.instagram.com/", "_blank", "noopener,noreferrer");
+            if (erroPreparacaoImagem || !arquivoImagemParaCompartilhar) {
+                alert("Não foi possível iniciar o compartilhamento da imagem neste navegador. Abra a página em um navegador compatível com compartilhamento de arquivos e tente novamente.");
+                return;
+            }
+
+            // Inicia o compartilhamento enquanto o clique em OK ainda é uma ação direta do usuário.
+            let compartilhamento;
+            try {
+                compartilhamento = navigator.share({
+                    files: [arquivoImagemParaCompartilhar],
+                    title: "Doações Gotas do Vale"
+                });
+            } catch (erro) {
+                alert("Não foi possível abrir o compartilhamento. Tente novamente em um navegador compatível.");
+                return;
+            }
+
+            let linkCopiado = false;
+            if (navigator.clipboard && window.isSecureContext) {
+                try { await navigator.clipboard.writeText(urlPagina); linkCopiado = true; } catch (erro) {}
+            }
+            if (!linkCopiado) linkCopiado = copiaAlternativa(urlPagina);
+
+            try {
+                await compartilhamento;
+                if (!linkCopiado) alert("A imagem foi compartilhada. Não foi possível copiar o link automaticamente; copie-o aqui: " + urlPagina);
+            } catch (erro) {
+                if (erro.name !== "AbortError") alert("O compartilhamento não foi concluído. Tente novamente.");
+            }
         }
 
         document.getElementById("instagramModal").addEventListener("click", (evento) => {
