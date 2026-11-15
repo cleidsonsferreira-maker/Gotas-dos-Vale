@@ -146,22 +146,23 @@
         }
 
         async function compartilharInstagram() {
+            const janelaInstagram = window.open("https://www.instagram.com/", "_blank");
             const linkCopiado = await copiarLinkCompartilhamento();
-            try {
-                const arquivo = await obterArquivoImagem();
-                if (navigator.canShare && navigator.canShare({ files: [arquivo] }) && navigator.share) {
-                    await navigator.share({ files: [arquivo], text: urlPagina, title: "Doações Gotas do Vale" });
-                    return;
-                }
-            } catch (erro) {
-                if (erro.name === "AbortError") return;
+            const linkDownload = document.createElement("a");
+            linkDownload.href = urlImagem;
+            linkDownload.download = "criancas-fundo.jpg";
+            document.body.appendChild(linkDownload);
+            linkDownload.click();
+            linkDownload.remove();
+
+            const aviso = linkCopiado
+                ? "O link foi copiado. Cole-o no campo da legenda do Instagram. A imagem foi baixada para você anexá-la à publicação."
+                : "A imagem foi baixada. Copie este link e cole-o no campo da legenda do Instagram: " + urlPagina;
+            alert(aviso);
+
+            if (!janelaInstagram) {
+                window.location.href = "https://www.instagram.com/";
             }
-            const linkDownload = document.createElement("a"); linkDownload.href = urlImagem;
-            linkDownload.download = "criancas-fundo.jpg"; document.body.appendChild(linkDownload); linkDownload.click(); linkDownload.remove();
-            window.open("https://www.instagram.com/", "_blank", "noopener,noreferrer");
-            alert(linkCopiado
-                ? "A imagem foi baixada e o link da página foi copiado. No Instagram, cole o link no campo da legenda."
-                : "A imagem foi baixada. Copie este link e cole no campo da legenda do Instagram: " + urlPagina);
         }
     </script>
 </body>
