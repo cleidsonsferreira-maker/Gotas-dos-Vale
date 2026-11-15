@@ -22,8 +22,6 @@
             --green: #16a34a;
             --meadow: #3f7a3a;
             --meadow-dark: #2c5a34;
-            --whatsapp: #25D366;
-            --whatsapp-dark: #1ebe5d;
         }
 
         * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -206,72 +204,6 @@
             box-shadow: 0 6px 20px rgba(22, 163, 74, 0.35);
         }
 
-        /* Área de Compartilhamento */
-        .share-section {
-            margin-top: 28px;
-            padding-top: 22px;
-            border-top: 1px solid #e9ecef;
-        }
-
-        .share-label {
-            display: block;
-            font-size: 0.8rem;
-            font-weight: 800;
-            letter-spacing: 0.08em;
-            text-transform: uppercase;
-            color: var(--muted);
-            margin-bottom: 14px;
-        }
-
-        .share-buttons {
-            display: flex;
-            flex-wrap: wrap;
-            gap: 12px;
-            justify-content: center;
-        }
-
-        .btn-share {
-            color: #fff;
-            border: none;
-            padding: 13px 22px;
-            font-family: inherit;
-            font-size: 0.98rem;
-            font-weight: 800;
-            border-radius: 50px;
-            cursor: pointer;
-            text-decoration: none;
-            flex: 1 1 165px;
-            max-width: 210px;
-            display: inline-flex;
-            align-items: center;
-            justify-content: center;
-            gap: 8px;
-            transition: transform 0.2s ease, filter 0.2s ease;
-        }
-
-        .btn-share:hover {
-            transform: translateY(-2px);
-            filter: brightness(0.95);
-        }
-
-        .btn-whatsapp {
-            background: var(--whatsapp);
-            box-shadow: 0 6px 18px rgba(37, 211, 102, 0.35);
-        }
-
-        .btn-instagram {
-            background: linear-gradient(45deg, #f09433 0%, #e6683c 25%, #dc2743 50%, #cc2366 75%, #bc1888 100%);
-            box-shadow: 0 6px 18px rgba(220, 39, 67, 0.35);
-        }
-
-        .share-feedback {
-            margin-top: 12px;
-            font-size: 0.88rem;
-            font-weight: 700;
-            color: var(--green);
-            min-height: 1.4em;
-        }
-
         footer {
             text-align: center;
             padding: 0 20px 30px;
@@ -306,7 +238,6 @@
         @media (max-width: 480px) {
             .headline { padding: 18px 20px 20px; }
             .qr-wrapper img { width: 190px; height: 190px; }
-            .btn-share { max-width: 100%; }
         }
 
         @media (prefers-reduced-motion: reduce) {
@@ -324,3 +255,72 @@
             <p class="subtitle">Faça você também parte dessa missão.</p>
             <a class="btn-doar" href="#doar">
                 Quero doar
+                <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg>
+            </a>
+        </div>
+    </section>
+
+    <section class="donate" id="doar">
+        <div class="donation-card">
+            <h2>Contribua via Pix</h2>
+            <p>Aponte a câmera do seu celular para o QR Code abaixo ou copie o código Pix.</p>
+
+            <div class="qr-wrapper">
+                <img src="qrcode-pix.jpeg" alt="QR Code Pix Instituto CEIFA" width="220" height="220">
+            </div>
+
+            <span class="pix-label">Pix copia e cola</span>
+            <div class="pix-box" id="pixCode">00020126460014br.gov.bcb.pix0124institutoceifa@gmail.com5204000053039865802BR5915INSTITUTO_CEIFA6006Itinga610939610-00062150511GotasdoVale63042FE3</div>
+
+            <button class="btn-copy" id="copyBtn" onclick="copiarPix()">
+                <svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+                    <rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect>
+                    <path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path>
+                </svg>
+                <span id="btnText">Copiar Código Pix</span>
+            </button>
+        </div>
+    </section>
+
+    <footer>
+        <p><strong>Instituto CEIFA</strong> — Plantando Cristo, colhendo vidas.</p>
+    </footer>
+
+    <script>
+        function marcarCopiado() {
+            const botao = document.getElementById("copyBtn");
+            const textoBotao = document.getElementById("btnText");
+            botao.classList.add("copied");
+            textoBotao.innerText = "Código Pix Copiado!";
+            setTimeout(() => {
+                botao.classList.remove("copied");
+                textoBotao.innerText = "Copiar Código Pix";
+            }, 3500);
+        }
+
+        function copiaAlternativa(texto) {
+            const areaTexto = document.createElement("textarea");
+            areaTexto.value = texto;
+            areaTexto.setAttribute("readonly", "");
+            areaTexto.style.position = "fixed";
+            areaTexto.style.opacity = "0";
+            document.body.appendChild(areaTexto);
+            areaTexto.select();
+            areaTexto.setSelectionRange(0, texto.length);
+            document.execCommand("copy");
+            document.body.removeChild(areaTexto);
+            marcarCopiado();
+        }
+
+        function copiarPix() {
+            const codigoPix = document.getElementById("pixCode").innerText.trim();
+            if (navigator.clipboard && window.isSecureContext) {
+                navigator.clipboard.writeText(codigoPix).then(marcarCopiado).catch(() => copiaAlternativa(codigoPix));
+            } else {
+                copiaAlternativa(codigoPix);
+            }
+        }
+    </script>
+
+</body>
+</html>
