@@ -84,7 +84,7 @@
     <div class="share-modal" id="instagramModal" role="dialog" aria-modal="true" aria-labelledby="instagramModalTitle" aria-describedby="instagramModalMessage">
         <div class="share-modal-card">
             <h2 id="instagramModalTitle">Compartilhar no Instagram</h2>
-            <p id="instagramModalMessage">Toque em OK para copiar o link e abrir o compartilhamento da imagem. Na lista de apps, escolha Instagram.</p>
+            <p id="instagramModalMessage">O link já foi copiado. Ao compartilhar no seu Instagram, não esqueça de colar o link na legenda.</p>
             <button class="btn-copy" id="instagramOkButton" type="button" onclick="confirmarCompartilhamentoInstagram()">OK</button>
         </div>
     </div>
@@ -116,6 +116,17 @@
             else { copiaAlternativa(codigoPix); marcarCopiado(); }
         }
 
+        async function copiarLinkCompartilhamento() {
+            if (navigator.clipboard && window.isSecureContext) {
+                try { await navigator.clipboard.writeText(urlPagina); return true; } catch (erro) {}
+            }
+            return copiaAlternativa(urlPagina);
+        }
+
+        async function compartilharWhatsApp() {
+            window.open(`https://wa.me/?text=${encodeURIComponent(urlPagina)}`, "_blank", "noopener,noreferrer");
+        }
+
         async function prepararCompartilhamentoInstagram() {
             const modal = document.getElementById("instagramModal");
             const mensagem = document.getElementById("instagramModalMessage");
@@ -127,6 +138,11 @@
             arquivoImagemParaCompartilhar = null;
             erroPreparacaoImagem = false;
 
+            const linkCopiado = await copiarLinkCompartilhamento();
+            if (!linkCopiado) {
+                mensagem.innerText = "Não foi possível copiar o link automaticamente. Copie-o manualmente e cole na legenda ao compartilhar no Instagram.";
+            }
+
             try {
                 const resposta = await fetch(urlImagem);
                 if (!resposta.ok) throw new Error("Falha ao carregar imagem");
@@ -136,17 +152,15 @@
                     throw new Error("Compartilhamento de arquivos não suportado neste navegador");
                 }
                 arquivoImagemParaCompartilhar = arquivo;
-                mensagem.innerText = "Toque em OK para copiar o link e abrir o compartilhamento da imagem. Na lista de apps, escolha Instagram.";
+                mensagem.innerText = linkCopiado
+                    ? "O link já foi copiado. Ao compartilhar no seu Instagram, não esqueça de colar o link na legenda."
+                    : `Não foi possível copiar o link automaticamente. Copie-o manualmente e cole na legenda ao compartilhar no Instagram: ${urlPagina}`;
             } catch (erro) {
                 erroPreparacaoImagem = true;
                 mensagem.innerText = "Este navegador não permite compartilhar a imagem diretamente. Tente em um navegador compatível com compartilhamento de arquivos.";
             } finally {
                 botaoOk.disabled = false;
             }
-        }
-
-        async function compartilharWhatsApp() {
-            window.open(`https://wa.me/?text=${encodeURIComponent(urlPagina)}`, "_blank", "noopener,noreferrer");
         }
 
         function fecharPopupInstagram() {
@@ -160,27 +174,8 @@
                 return;
             }
 
-            // Inicia o compartilhamento enquanto o clique em OK ainda é uma ação direta do usuário.
-            let compartilhamento;
             try {
-                compartilhamento = navigator.share({
-                    files: [arquivoImagemParaCompartilhar],
-                    title: "Doações Gotas do Vale"
-                });
-            } catch (erro) {
-                alert("Não foi possível abrir o compartilhamento. Tente novamente em um navegador compatível.");
-                return;
-            }
-
-            let linkCopiado = false;
-            if (navigator.clipboard && window.isSecureContext) {
-                try { await navigator.clipboard.writeText(urlPagina); linkCopiado = true; } catch (erro) {}
-            }
-            if (!linkCopiado) linkCopiado = copiaAlternativa(urlPagina);
-
-            try {
-                await compartilhamento;
-                if (!linkCopiado) alert("A imagem foi compartilhada. Não foi possível copiar o link automaticamente; copie-o aqui: " + urlPagina);
+                await navigator.share({ files: [arquivoImagemParaCompartilhar], title: "Doações Gotas do Vale" });
             } catch (erro) {
                 if (erro.name !== "AbortError") alert("O compartilhamento não foi concluído. Tente novamente.");
             }
