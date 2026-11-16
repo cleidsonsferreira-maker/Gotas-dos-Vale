@@ -80,7 +80,7 @@
             <div class="share-section">
                 <h3>Compartilhe</h3>
                 <div class="share-actions">
-                    <button class="btn-copy btn-share" id="whatsappShareBtn" type="button" onclick="compartilharWhatsApp()" disabled><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.5a8.4 8.4 0 0 1-12.9 7.1L3 21l2.5-4.6A8.5 8.5 0 1 1 20.5 11.5Z"></path><path d="M15.7 13.9c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.4.2-.7.1a6.7 6.7 0 0 1-2-1.2 7.3 7.3 0 0 1-1.4-1.8c-.1-.3 0-.5.2-.6.2-.2.3-.4.5-.6.2-.2.2-.3.3-.6.1-.2.1-.4 0-.6-.1-.2-.7-1.7-.9-2.4-.2-.6-.4-.5-.7-.5h-.6c-.2 0-.5.1-.7.3-.2.3-.8.8-.8 2s.8 2.3.9 2.5c.2.2 1.6 2.3 3.8 3.2 2.1.9 2.1.6 2.5.6.4 0 1.3-.5 1.5-1 .2-.5.2-.9.1-1.1-.1-.2-.3-.3-.5-.5Z"></path></svg><span id="whatsappShareText">Preparando...</span></button>
+                    <button class="btn-copy btn-share" id="whatsappShareBtn" type="button" onclick="compartilharWhatsApp()" disabled><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.5A8.4 8.4 0 0 1 8.2 20l-1 .4 1.2-3.6A8.4 8.4 0 1 1 20.5 11.5Z"></path><path d="M15.7 13.9c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.8-.7-1.4-1.7-1.5-2-.2-.3-.1-.5.1-.6.1-.1.2-.2.4-.3.1-.1.2-.2.3-.4.1-.1.1-.3 0-.4-.1-.1-.7-1.8-1-2.4-.3-.6-.6-.5-.7-.5h-.6c-.2 0-.5.1-.7.3-.3.3-.9.9-.9 2.2 0 1.3.9 2.6 1.1 2.8.1.2 1.8 2.9 4.4 4 .6.2 1 .3 1.4.4.7.1 1.3.1 1.8.1.6 0 1.7-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.2-.3-.5-.4Z"></path></svg><span id="whatsAppShareText">Preparando...</span></button>
                     <button class="btn-copy btn-share" type="button" onclick="prepararCompartilhamentoInstagram()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"></circle></svg>Instagram</button>
                 </div>
             </div>
@@ -93,8 +93,7 @@
                 <ol class="share-steps">
                     <li>O link já foi copiado. Toque em <strong>OK</strong>.</li>
                     <li>Escolha como quer compartilhar: <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li>
-                    <li>Se for <strong>Story</strong>, use a figurinha <strong>Link</strong> e cole o link.</li>
-                    <li>Se for <strong>publicação</strong> ou <strong>Reel</strong>, cole o link na legenda.</li>
+                    <li>Cole o link na legenda, independentemente do tipo de compartilhamento.</li>
                 </ol>
             </div>
             <button class="btn-copy" id="instagramOkButton" type="button" onclick="confirmarCompartilhamentoInstagram()">OK</button>
@@ -118,11 +117,11 @@
             arquivoImagemParaCompartilhar = arquivo;
             const botao = document.getElementById("whatsappShareBtn");
             botao.disabled = false;
-            document.getElementById("whatsappShareText").innerText = "WhatsApp";
+            document.getElementById("whatsAppShareText").innerText = "WhatsApp";
         }).catch(() => {
             const botao = document.getElementById("whatsappShareBtn");
             botao.disabled = false;
-            document.getElementById("whatsappShareText").innerText = "WhatsApp (link)";
+            document.getElementById("whatsAppShareText").innerText = "WhatsApp (link)";
         });
 
         function marcarCopiado() {
@@ -202,7 +201,7 @@
 
             const linkCopiado = await copiarLinkCompartilhamento();
             if (!linkCopiado) {
-                mensagem.innerHTML = '<ol class="share-steps"><li>Não foi possível copiar o link automaticamente.</li><li>Abra o Instagram e escolha <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li><li>Depois, cole o link na legenda ou na figurinha <strong>Link</strong>.</li></ol>';
+                mensagem.innerHTML = '<ol class="share-steps"><li>Não foi possível copiar o link automaticamente.</li><li>Abra o Instagram e escolha <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li><li>Cole o link na legenda, independentemente do tipo de compartilhamento.</li></ol>';
             }
 
             try {
@@ -215,11 +214,11 @@
                 }
                 arquivoImagemParaCompartilhar = arquivo;
                 mensagem.innerHTML = linkCopiado
-                    ? '<ol class="share-steps"><li>O link já foi copiado. Toque em <strong>OK</strong>.</li><li>Escolha como quer compartilhar: <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li><li>Se for <strong>Story</strong>, use a figurinha <strong>Link</strong> e cole o link.</li><li>Se for <strong>publicação</strong> ou <strong>Reel</strong>, cole o link na legenda.</li></ol>'
-                    : '<ol class="share-steps"><li>O link não foi copiado automaticamente.</li><li>Abra o Instagram e escolha <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li><li>Use a figurinha <strong>Link</strong> ou cole o link na legenda.</li><li>O link da página é: <strong>' + urlPagina + '</strong></li></ol>';
+                    ? '<ol class="share-steps"><li>O link já foi copiado. Toque em <strong>OK</strong>.</li><li>Escolha como quer compartilhar: <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li><li>Cole o link na legenda, independentemente do tipo de compartilhamento.</li></ol>'
+                    : '<ol class="share-steps"><li>O link não foi copiado automaticamente.</li><li>Abra o Instagram e escolha <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li><li>Cole o link na legenda, independentemente do tipo de compartilhamento.</li></ol>';
             } catch (erro) {
                 erroPreparacaoImagem = true;
-                mensagem.innerHTML = '<ol class="share-steps"><li>Este navegador não permite enviar a imagem diretamente.</li><li>Abra a página em um navegador compatível com compartilhamento de arquivos.</li><li>Depois, escolha <strong>Story</strong> ou <strong>publicação</strong> e cole o link na legenda.</li></ol>';
+                mensagem.innerHTML = '<ol class="share-steps"><li>Este navegador não permite enviar a imagem diretamente.</li><li>Abra a página em um navegador compatível com compartilhamento de arquivos.</li><li>Cole o link na legenda, independentemente do tipo de compartilhamento.</li></ol>';
             } finally {
                 botaoOk.disabled = false;
             }
