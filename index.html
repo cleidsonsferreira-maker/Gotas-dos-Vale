@@ -91,7 +91,9 @@
             <h2 id="instagramModalTitle">Compartilhar no Instagram</h2>
             <div id="instagramModalMessage" class="share-instructions" aria-live="polite">
                 <ol class="share-steps">
-                    <li>Cole o link na legenda.</li>
+                    <li>Toque em <strong>OK</strong> e escolha <strong>Instagram</strong>.</li>
+                    <li>Escolha onde compartilhar: <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li>
+                    <li>cole o link na legenda.</li>
                 </ol>
             </div>
             <button class="btn-copy" id="instagramOkButton" type="button" onclick="confirmarCompartilhamentoInstagram()">OK</button>
@@ -199,7 +201,7 @@
 
             const linkCopiado = await copiarLinkCompartilhamento();
             if (!linkCopiado) {
-                mensagem.innerHTML = '<ol class="share-steps"><li>Cole o link na legenda.</li></ol>';
+                mensagem.innerHTML = '<ol class="share-steps"><li>Toque em <strong>OK</strong> e escolha <strong>Instagram</strong>.</li><li>Escolha onde compartilhar: <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li><li>cole o link na legenda.</li></ol>';
             }
 
             try {
@@ -211,12 +213,10 @@
                     throw new Error("Compartilhamento de arquivos não suportado neste navegador");
                 }
                 arquivoImagemParaCompartilhar = arquivo;
-                mensagem.innerHTML = linkCopiado
-                    ? '<ol class="share-steps"><li>Cole o link na legenda.</li></ol>'
-                    : '<ol class="share-steps"><li>Cole o link na legenda.</li></ol>';
+                mensagem.innerHTML = '<ol class="share-steps"><li>Toque em <strong>OK</strong> e escolha <strong>Instagram</strong>.</li><li>Escolha onde compartilhar: <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li><li>cole o link na legenda.</li></ol>';
             } catch (erro) {
                 erroPreparacaoImagem = true;
-                mensagem.innerHTML = '<ol class="share-steps"><li>Cole o link na legenda.</li></ol>';
+                mensagem.innerHTML = '<ol class="share-steps"><li>Toque em <strong>OK</strong> e escolha <strong>Instagram</strong>.</li><li>Escolha onde compartilhar: <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li><li>cole o link na legenda.</li></ol>';
             } finally {
                 botaoOk.disabled = false;
             }
