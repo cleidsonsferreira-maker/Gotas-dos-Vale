@@ -91,9 +91,7 @@
             <h2 id="instagramModalTitle">Compartilhar no Instagram</h2>
             <div id="instagramModalMessage" class="share-instructions" aria-live="polite">
                 <ol class="share-steps">
-                    <li>O link já foi copiado. Toque em <strong>OK</strong>.</li>
-                    <li>Escolha como quer compartilhar: <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li>
-                    <li>Cole o link na legenda, independentemente do tipo de compartilhamento.</li>
+                    <li>Cole o link na legenda.</li>
                 </ol>
             </div>
             <button class="btn-copy" id="instagramOkButton" type="button" onclick="confirmarCompartilhamentoInstagram()">OK</button>
@@ -201,7 +199,7 @@
 
             const linkCopiado = await copiarLinkCompartilhamento();
             if (!linkCopiado) {
-                mensagem.innerHTML = '<ol class="share-steps"><li>Não foi possível copiar o link automaticamente.</li><li>Abra o Instagram e escolha <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li><li>Cole o link na legenda, independentemente do tipo de compartilhamento.</li></ol>';
+                mensagem.innerHTML = '<ol class="share-steps"><li>Cole o link na legenda.</li></ol>';
             }
 
             try {
@@ -214,11 +212,11 @@
                 }
                 arquivoImagemParaCompartilhar = arquivo;
                 mensagem.innerHTML = linkCopiado
-                    ? '<ol class="share-steps"><li>O link já foi copiado. Toque em <strong>OK</strong>.</li><li>Escolha como quer compartilhar: <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li><li>Cole o link na legenda, independentemente do tipo de compartilhamento.</li></ol>'
-                    : '<ol class="share-steps"><li>O link não foi copiado automaticamente.</li><li>Abra o Instagram e escolha <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li><li>Cole o link na legenda, independentemente do tipo de compartilhamento.</li></ol>';
+                    ? '<ol class="share-steps"><li>Cole o link na legenda.</li></ol>'
+                    : '<ol class="share-steps"><li>Cole o link na legenda.</li></ol>';
             } catch (erro) {
                 erroPreparacaoImagem = true;
-                mensagem.innerHTML = '<ol class="share-steps"><li>Este navegador não permite enviar a imagem diretamente.</li><li>Abra a página em um navegador compatível com compartilhamento de arquivos.</li><li>Cole o link na legenda, independentemente do tipo de compartilhamento.</li></ol>';
+                mensagem.innerHTML = '<ol class="share-steps"><li>Cole o link na legenda.</li></ol>';
             } finally {
                 botaoOk.disabled = false;
             }
