@@ -81,7 +81,7 @@
             <p class="share-intro">ATENÇÃO: siga cada passo na ordem para compartilhar corretamente.</p>
             <div id="instagramModalMessage" class="share-instructions" aria-live="polite"><ol class="share-steps">
                 <li>Toque em <strong>OK</strong> e escolha <strong>Instagram</strong>.</li>
-                <li>Escolha onde compartilhar: <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li>
+                <li>Quando o Instagram abrir, escolha <strong>Story</strong>.</li>
                 <li>Na legenda, <strong>cole o link</strong> que já foi copiado.</li>
             </ol></div>
             <p id="instagramWaitMessage" class="share-status" role="status" aria-live="polite">Leia as instruções. O botão OK aparecerá em 5 segundos.</p>
@@ -161,7 +161,7 @@
             arquivoImagemParaCompartilhar = null;
             erroPreparacaoImagem = false;
             setTimeout(() => { tempoDeLeituraConcluido = true; mostrarBotaoOkSePronto(); }, 5000);
-            const instrucoes = '<ol class="share-steps"><li>Toque em <strong>OK</strong> e escolha <strong>Instagram</strong>.</li><li>Escolha onde compartilhar: <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li><li>Na legenda, <strong>cole o link</strong> que já foi copiado.</li></ol>';
+            const instrucoes = '<ol class="share-steps"><li>Toque em <strong>OK</strong> e escolha <strong>Instagram</strong>.</li><li>Quando o Instagram abrir, escolha <strong>Story</strong>.</li><li>Na legenda, <strong>cole o link</strong> que já foi copiado.</li></ol>';
             const linkCopiado = await copiarLinkCompartilhamento();
             try {
                 const resposta = await fetch(urlImagem);
