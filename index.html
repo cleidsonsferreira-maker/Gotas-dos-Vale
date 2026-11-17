@@ -84,7 +84,7 @@
                 <li>Escolha onde compartilhar: <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li>
                 <li>Na legenda, <strong>cole o link</strong> que já foi copiado.</li>
             </ol></div>
-            <p id="instagramWaitMessage" class="share-status" role="status" aria-live="polite">Leia as instruções. O botão OK aparecerá em 3 segundos.</p>
+            <p id="instagramWaitMessage" class="share-status" role="status" aria-live="polite">Leia as instruções. O botão OK aparecerá em 5 segundos.</p>
             <button class="btn-copy" id="instagramOkButton" type="button" onclick="confirmarCompartilhamentoInstagram()" hidden disabled>OK</button>
         </div>
     </div>
@@ -152,7 +152,7 @@
             const aviso = document.getElementById("instagramWaitMessage");
             botaoOk.hidden = true;
             botaoOk.disabled = true;
-            aviso.textContent = "Leia as 3 instruções com atenção. O botão OK aparecerá em 3 segundos.";
+            aviso.textContent = "Leia as 3 instruções com atenção. O botão OK aparecerá em 5 segundos.";
             mensagem.innerHTML = '<div class="share-status">Preparando a imagem para compartilhar...</div>';
             modal.classList.add("is-open");
             document.getElementById("instagramModalTitle").focus?.();
@@ -160,7 +160,7 @@
             tempoDeLeituraConcluido = false;
             arquivoImagemParaCompartilhar = null;
             erroPreparacaoImagem = false;
-            setTimeout(() => { tempoDeLeituraConcluido = true; mostrarBotaoOkSePronto(); }, 3000);
+            setTimeout(() => { tempoDeLeituraConcluido = true; mostrarBotaoOkSePronto(); }, 5000);
             const instrucoes = '<ol class="share-steps"><li>Toque em <strong>OK</strong> e escolha <strong>Instagram</strong>.</li><li>Escolha onde compartilhar: <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li><li>Na legenda, <strong>cole o link</strong> que já foi copiado.</li></ol>';
             const linkCopiado = await copiarLinkCompartilhamento();
             try {
