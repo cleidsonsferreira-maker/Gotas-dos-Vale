@@ -14,89 +14,78 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700;800;900&display=swap" rel="stylesheet">
     <style>
-        :root { --orange: #E87A14; --orange-dark: #c9640a; --text: #2b2b2b; --muted: #5a5a5a; --green: #16a34a; --meadow: #3f7a3a; --meadow-dark: #2c5a34; }
+        :root { --orange: #e87a14; --orange-dark: #c9640a; --text: #2b2b2b; --muted: #5a5a5a; --green: #16a34a; --meadow: #3f7a3a; --meadow-dark: #2c5a34; }
         * { margin: 0; padding: 0; box-sizing: border-box; }
         html, body { min-height: 100%; }
         body { font-family: 'Nunito', system-ui, sans-serif; color: var(--text); line-height: 1.6; background: var(--meadow-dark); }
         .bg { position: fixed; inset: 0; z-index: -1; background: url("criancas-fundo.jpg") center top / cover no-repeat, #f7c99a; }
-        .bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, rgba(0,0,0,0) 0%, rgba(0,0,0,0) 55%, rgba(30,60,30,0.35) 100%); }
+        .bg::after { content: ""; position: absolute; inset: 0; background: linear-gradient(to bottom, transparent 0%, transparent 55%, rgba(30,60,30,.35) 100%); }
         .hero { min-height: 100svh; display: flex; flex-direction: column; justify-content: flex-end; align-items: center; padding: 24px 20px 40px; text-align: center; }
-        .headline { background: rgba(255,255,255,0.86); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border-radius: 28px; padding: 22px 30px 24px; max-width: 620px; box-shadow: 0 14px 40px rgba(0,0,0,0.18); animation: subir 0.9s ease-out both; }
+        .headline { background: rgba(255,255,255,.86); backdrop-filter: blur(6px); -webkit-backdrop-filter: blur(6px); border-radius: 28px; padding: 22px 30px 24px; max-width: 620px; box-shadow: 0 14px 40px rgba(0,0,0,.18); animation: subir .9s ease-out both; }
         h1 { font-size: clamp(1.9rem,5vw,2.8rem); font-weight: 900; line-height: 1.15; color: var(--orange); }
-        .subtitle { margin-top: 8px; font-size: clamp(1.1rem,2.8vw,1.4rem); font-weight: 700; color: var(--text); }
-        .btn-doar { margin-top: 18px; display: inline-flex; align-items: center; gap: 8px; background: var(--orange); color: #fff; text-decoration: none; font-weight: 800; font-size: 1.05rem; padding: 12px 28px; border-radius: 50px; box-shadow: 0 6px 18px rgba(232,122,20,0.35); transition: transform 0.2s ease, background 0.2s ease; }
+        .subtitle { margin-top: 8px; font-size: clamp(1.1rem,2.8vw,1.4rem); font-weight: 700; }
+        .btn-doar { margin-top: 18px; display: inline-flex; align-items: center; gap: 8px; background: var(--orange); color: #fff; text-decoration: none; font-weight: 800; font-size: 1.05rem; padding: 12px 28px; border-radius: 50px; box-shadow: 0 6px 18px rgba(232,122,20,.35); transition: .2s; }
         .btn-doar:hover { background: var(--orange-dark); transform: translateY(-2px); }
         .btn-doar svg { animation: pular 1.6s ease-in-out infinite; }
         .donate { padding: 20px 20px 60px; display: flex; justify-content: center; }
-        .donation-card { width: 100%; max-width: 520px; background: rgba(255,255,255,0.95); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 28px; padding: 34px 26px; text-align: center; box-shadow: 0 18px 50px rgba(0,0,0,0.25); }
-        .donation-card h2 { font-size: 1.6rem; font-weight: 900; color: var(--text); }
+        .donation-card { width: 100%; max-width: 520px; background: rgba(255,255,255,.95); backdrop-filter: blur(8px); -webkit-backdrop-filter: blur(8px); border-radius: 28px; padding: 34px 26px; text-align: center; box-shadow: 0 18px 50px rgba(0,0,0,.25); }
+        .donation-card h2 { font-size: 1.6rem; font-weight: 900; }
         .qr-wrapper { background: #fff; padding: 10px; border: 3px dashed var(--orange); border-radius: 18px; display: inline-block; margin: 16px 0 18px; }
         .qr-wrapper img { width: 150px; height: 150px; display: block; }
-        .pix-label { display: block; font-size: 0.8rem; font-weight: 800; letter-spacing: 0.08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
-        .pix-box { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 12px; padding: 12px 15px; font-size: 0.8rem; color: #495057; word-break: break-all; margin-bottom: 18px; user-select: all; text-align: left; }
-        .btn-copy { background: var(--orange); color: #fff; border: none; padding: 15px 18px; font-family: inherit; font-size: 0.98rem; font-weight: 800; border-radius: 50px; cursor: pointer; width: 100%; max-width: 360px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; transition: all 0.25s ease; box-shadow: 0 6px 20px rgba(232,122,20,0.35); }
+        .pix-label { display: block; font-size: .8rem; font-weight: 800; letter-spacing: .08em; text-transform: uppercase; color: var(--muted); margin-bottom: 6px; }
+        .pix-box { background: #f8f9fa; border: 1px solid #dee2e6; border-radius: 12px; padding: 12px 15px; font-size: .8rem; color: #495057; word-break: break-all; margin-bottom: 18px; user-select: all; text-align: left; }
+        .btn-copy { background: var(--orange); color: #fff; border: 0; padding: 15px 18px; font: inherit; font-size: .98rem; font-weight: 800; border-radius: 50px; cursor: pointer; width: 100%; max-width: 360px; display: inline-flex; align-items: center; justify-content: center; gap: 10px; transition: all .25s ease; box-shadow: 0 6px 20px rgba(232,122,20,.35); }
         .btn-copy:hover { background: var(--orange-dark); transform: translateY(-2px); }
-        .btn-copy:disabled { opacity: 0.65; cursor: wait; }
-        .btn-copy.copied { background: var(--green); box-shadow: 0 6px 20px rgba(22,163,74,0.35); }
+        .btn-copy:disabled { opacity: .65; cursor: wait; }
+        .btn-copy.copied { background: var(--green); }
         .share-section { margin-top: 20px; padding-top: 18px; border-top: 1px solid #e5e7eb; }
-        .share-section h3 { font-size: 1rem; font-weight: 800; color: var(--text); margin-bottom: 12px; }
-        .share-actions { display: flex; flex-direction: row; justify-content: center; align-items: center; gap: 10px; }
+        .share-section h3 { font-size: 1rem; font-weight: 800; margin-bottom: 12px; }
+        .share-actions { display: flex; justify-content: center; align-items: center; gap: 10px; }
         .share-actions .btn-copy { width: auto; min-width: 150px; max-width: 180px; }
-        .btn-share { text-decoration: none; }
-        .share-modal { position: fixed; inset: 0; z-index: 10; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(0,0,0,0.55); }
+        .share-modal { position: fixed; inset: 0; z-index: 10; display: none; align-items: center; justify-content: center; padding: 20px; background: rgba(0,0,0,.68); }
         .share-modal.is-open { display: flex; }
-        .share-modal-card { width: 100%; max-width: 430px; padding: 28px 24px; border-radius: 22px; background: #fff; text-align: center; box-shadow: 0 18px 50px rgba(0,0,0,0.3); }
-        .share-modal-card h2 { margin-bottom: 12px; font-size: 1.35rem; font-weight: 900; }
-        .share-modal-card p { margin-bottom: 20px; color: var(--muted); }
-        .share-modal-card .share-instructions { width: 100%; margin-bottom: 20px; text-align: left; }
+        .share-modal-card { width: 100%; max-width: 460px; padding: 28px 24px; border: 3px solid var(--orange); border-radius: 22px; background: #fff; text-align: center; box-shadow: 0 18px 50px rgba(0,0,0,.4); }
+        .share-modal-card h2 { margin-bottom: 10px; font-size: 1.45rem; font-weight: 900; color: #8a3d00; }
+        .share-intro { margin-bottom: 16px; padding: 10px 12px; border-radius: 10px; background: #fff1df; color: #5b2b00; font-weight: 900; }
+        .share-instructions { width: 100%; margin-bottom: 20px; text-align: left; }
         .share-steps { list-style: none; padding: 0; margin: 0; counter-reset: passo; }
-        .share-steps li { position: relative; padding-left: 2.5rem; margin-bottom: 0.8rem; color: var(--text); font-weight: 700; line-height: 1.45; }
-        .share-steps li::before { counter-increment: passo; content: counter(passo); position: absolute; left: 0; top: 0; width: 1.7rem; height: 1.7rem; border-radius: 50%; background: var(--orange); color: #fff; display: grid; place-items: center; font-size: 0.75rem; font-weight: 900; }
-        .share-modal-card .btn-copy { max-width: 100%; }
-        footer { text-align: center; padding: 0 20px 30px; color: #fff; font-size: 0.9rem; text-shadow: 0 1px 4px rgba(0,0,0,0.5); }
+        .share-steps li { position: relative; padding: 12px 12px 12px 3rem; margin-bottom: 10px; border: 2px solid #e87a14; border-radius: 12px; background: #fff8ee; color: #262626; font-size: 1.03rem; font-weight: 800; line-height: 1.4; }
+        .share-steps li::before { counter-increment: passo; content: counter(passo); position: absolute; left: 10px; top: 50%; transform: translateY(-50%); width: 1.8rem; height: 1.8rem; border-radius: 50%; background: #a94400; color: #fff; display: grid; place-items: center; font-weight: 900; }
+        .share-steps strong { color: #8a3d00; text-decoration: underline; text-decoration-thickness: 2px; }
+        .share-status { margin: 12px 0; color: var(--muted); font-weight: 700; text-align: center; }
+        .share-modal-card .btn-copy { max-width: 100%; min-height: 52px; font-size: 1.1rem; }
+        .share-modal-card .btn-copy[hidden] { display: none; }
+        footer { text-align: center; padding: 0 20px 30px; color: #fff; font-size: .9rem; text-shadow: 0 1px 4px rgba(0,0,0,.5); }
         @keyframes subir { from { opacity: 0; transform: translateY(24px); } to { opacity: 1; transform: none; } }
-        @keyframes pular { 0%, 100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
+        @keyframes pular { 0%,100% { transform: translateY(0); } 50% { transform: translateY(3px); } }
         @media (max-aspect-ratio: 1/1) { .bg { background: url("criancas-fundo.jpg") center top / 100% auto no-repeat, linear-gradient(to bottom,#f7c99a 0%,var(--meadow) 45%,var(--meadow-dark) 100%); } .hero { min-height: auto; padding-top: calc(85.4vw - 40px); } }
-        @media (max-width: 480px) { .headline { padding: 18px 20px 20px; } .qr-wrapper img { width: 130px; height: 130px; } .share-actions { flex-direction: column; } .share-actions .btn-copy { width: 100%; max-width: 320px; } }
+        @media (max-width: 480px) { .headline { padding: 18px 20px 20px; } .qr-wrapper img { width: 130px; height: 130px; } .share-actions { flex-direction: column; } .share-actions .btn-copy { width: 100%; max-width: 320px; } .share-modal-card { padding: 24px 18px; } }
         @media (prefers-reduced-motion: reduce) { .headline, .btn-doar svg { animation: none; } }
     </style>
 </head>
 <body>
     <div class="bg" role="img" aria-label="Ilustração de crianças diversas rindo e brincando no vale, com a logo do Instituto CEIFA"></div>
-    <section class="hero">
-        <div class="headline">
-            <h1>Doações Gotas do Vale</h1>
-            <p class="subtitle">Faça você também parte dessa missão.</p>
-            <a class="btn-doar" href="#doar">Quero doar <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a>
-        </div>
-    </section>
-    <section class="donate" id="doar">
-        <div class="donation-card">
-            <h2>Contribua via Pix</h2>
-            <div class="qr-wrapper"><img src="qrcode-pix.jpeg" alt="QR Code Pix Instituto CEIFA" width="150" height="150"></div>
-            <span class="pix-label">Pix copia e cola</span>
-            <div class="pix-box" id="pixCode">00020126460014br.gov.bcb.pix0124institutoceifa@gmail.com5204000053039865802BR5915INSTITUTO_CEIFA6006Itinga610939610-00062150511GotasdoVale63042FE3</div>
-            <button class="btn-copy" id="copyBtn" onclick="copiarPix()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="9" y="9" width="13" height="13" rx="2" ry="2"></rect><path d="M5 15H4a2 2 0 0 1-2-2V4a2 2 0 0 1 2-2h9a2 2 0 0 1 2 2v1"></path></svg><span id="btnText">Copiar Código Pix</span></button>
-            <div class="share-section">
-                <h3>Compartilhe</h3>
-                <div class="share-actions">
-                    <button class="btn-copy btn-share" id="whatsappShareBtn" type="button" onclick="compartilharWhatsApp()" disabled><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20.5 11.5A8.4 8.4 0 0 1 8.2 20l-1 .4 1.2-3.6A8.4 8.4 0 1 1 20.5 11.5Z"></path><path d="M15.7 13.9c-.3-.1-1.7-.8-2-.9-.3-.1-.5-.1-.7.1-.2.3-.8.9-.9 1.1-.2.2-.3.2-.6.1-.3-.1-1.2-.4-2.3-1.4-.8-.7-1.4-1.7-1.5-2-.2-.3-.1-.5.1-.6.1-.1.2-.2.4-.3.1-.1.2-.2.3-.4.1-.1.1-.3 0-.4-.1-.1-.7-1.8-1-2.4-.3-.6-.6-.5-.7-.5h-.6c-.2 0-.5.1-.7.3-.3.3-.9.9-.9 2.2 0 1.3.9 2.6 1.1 2.8.1.2 1.8 2.9 4.4 4 .6.2 1 .3 1.4.4.7.1 1.3.1 1.8.1.6 0 1.7-.7 2-1.4.3-.7.3-1.3.2-1.4-.1-.2-.2-.3-.5-.4Z"></path></svg><span id="whatsAppShareText">Preparando...</span></button>
-                    <button class="btn-copy btn-share" type="button" onclick="prepararCompartilhamentoInstagram()"><svg width="22" height="22" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="3" y="3" width="18" height="18" rx="5"></rect><circle cx="12" cy="12" r="4"></circle><circle cx="17.5" cy="6.5" r="0.5" fill="currentColor" stroke="none"></circle></svg>Instagram</button>
-                </div>
-            </div>
-        </div>
-    </section>
+    <section class="hero"><div class="headline"><h1>Doações Gotas do Vale</h1><p class="subtitle">Faça você também parte dessa missão.</p><a class="btn-doar" href="#doar">Quero doar <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 5v14M5 12l7 7 7-7"/></svg></a></div></section>
+    <section class="donate" id="doar"><div class="donation-card">
+        <h2>Contribua via Pix</h2><div class="qr-wrapper"><img src="qrcode-pix.jpeg" alt="QR Code Pix Instituto CEIFA" width="150" height="150"></div>
+        <span class="pix-label">Pix copia e cola</span><div class="pix-box" id="pixCode">00020126460014br.gov.bcb.pix0124institutoceifa@gmail.com5204000053039865802BR5915INSTITUTO_CEIFA6006Itinga610939610-00062150511GotasdoVale63042FE3</div>
+        <button class="btn-copy" id="copyBtn" type="button" onclick="copiarPix()"><span id="btnText">Copiar Código Pix</span></button>
+        <div class="share-section"><h3>Compartilhe</h3><div class="share-actions">
+            <button class="btn-copy" id="whatsappShareBtn" type="button" onclick="compartilharWhatsApp()" disabled>WhatsApp</button>
+            <button class="btn-copy" type="button" onclick="prepararCompartilhamentoInstagram()">Instagram</button>
+        </div></div>
+    </div></section>
     <div class="share-modal" id="instagramModal" role="dialog" aria-modal="true" aria-labelledby="instagramModalTitle" aria-describedby="instagramModalMessage">
         <div class="share-modal-card">
-            <h2 id="instagramModalTitle">Compartilhar no Instagram</h2>
-            <div id="instagramModalMessage" class="share-instructions" aria-live="polite">
-                <ol class="share-steps">
-                    <li>Toque em <strong>OK</strong> e escolha <strong>Instagram</strong>.</li>
-                    <li>Escolha onde compartilhar: <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li>
-                    <li>cole o link na legenda.</li>
-                </ol>
-            </div>
-            <button class="btn-copy" id="instagramOkButton" type="button" onclick="confirmarCompartilhamentoInstagram()">OK</button>
+            <h2 id="instagramModalTitle">Leia as 3 instruções antes de continuar</h2>
+            <p class="share-intro">ATENÇÃO: siga cada passo na ordem para compartilhar corretamente.</p>
+            <div id="instagramModalMessage" class="share-instructions" aria-live="polite"><ol class="share-steps">
+                <li>Toque em <strong>OK</strong> e escolha <strong>Instagram</strong>.</li>
+                <li>Escolha onde compartilhar: <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li>
+                <li>Na legenda, <strong>cole o link</strong> que já foi copiado.</li>
+            </ol></div>
+            <p id="instagramWaitMessage" class="share-status" role="status" aria-live="polite">Leia as instruções. O botão OK aparecerá em 3 segundos.</p>
+            <button class="btn-copy" id="instagramOkButton" type="button" onclick="confirmarCompartilhamentoInstagram()" hidden disabled>OK</button>
         </div>
     </div>
     <footer><p><strong>Instituto CEIFA</strong> — Plantando Cristo, colhendo vidas.</p></footer>
@@ -105,148 +94,106 @@
         const urlImagem = new URL("criancas-fundo.jpg", window.location.href).href;
         let arquivoImagemParaCompartilhar = null;
         let erroPreparacaoImagem = false;
+        let preparacaoInstagramConcluida = false;
+        let tempoDeLeituraConcluido = false;
 
-        const imagemWhatsAppPronta = fetch(urlImagem)
-            .then((resposta) => {
-                if (!resposta.ok) throw new Error("Não foi possível carregar a imagem.");
-                return resposta.blob();
-            })
-            .then((imagem) => new File([imagem], "criancas-fundo.jpg", { type: imagem.type || "image/jpeg" }));
-
-        imagemWhatsAppPronta.then((arquivo) => {
+        fetch(urlImagem).then((resposta) => {
+            if (!resposta.ok) throw new Error("Não foi possível carregar a imagem.");
+            return resposta.blob();
+        }).then((imagem) => new File([imagem], "criancas-fundo.jpg", { type: imagem.type || "image/jpeg" })).then((arquivo) => {
             arquivoImagemParaCompartilhar = arquivo;
-            const botao = document.getElementById("whatsappShareBtn");
-            botao.disabled = false;
-            document.getElementById("whatsAppShareText").innerText = "WhatsApp";
+            document.getElementById("whatsappShareBtn").disabled = false;
         }).catch(() => {
-            const botao = document.getElementById("whatsappShareBtn");
-            botao.disabled = false;
-            document.getElementById("whatsAppShareText").innerText = "WhatsApp (link)";
+            document.getElementById("whatsappShareBtn").disabled = false;
         });
 
         function marcarCopiado() {
             const botao = document.getElementById("copyBtn");
-            const textoBotao = document.getElementById("btnText");
+            document.getElementById("btnText").innerText = "Código Pix Copiado!";
             botao.classList.add("copied");
-            textoBotao.innerText = "Código Pix Copiado!";
-            setTimeout(() => {
-                botao.classList.remove("copied");
-                textoBotao.innerText = "Copiar Código Pix";
-            }, 3500);
+            setTimeout(() => { botao.classList.remove("copied"); document.getElementById("btnText").innerText = "Copiar Código Pix"; }, 3500);
         }
-
         function copiaAlternativa(texto) {
             const areaTexto = document.createElement("textarea");
-            areaTexto.value = texto;
-            areaTexto.setAttribute("readonly", "");
-            areaTexto.style.position = "fixed";
-            areaTexto.style.opacity = "0";
-            document.body.appendChild(areaTexto);
-            areaTexto.select();
-            areaTexto.setSelectionRange(0, texto.length);
-            const copiou = document.execCommand("copy");
-            document.body.removeChild(areaTexto);
-            return copiou;
+            areaTexto.value = texto; areaTexto.setAttribute("readonly", "");
+            areaTexto.style.position = "fixed"; areaTexto.style.opacity = "0";
+            document.body.appendChild(areaTexto); areaTexto.select(); areaTexto.setSelectionRange(0, texto.length);
+            const copiou = document.execCommand("copy"); document.body.removeChild(areaTexto); return copiou;
         }
-
         function copiarPix() {
             const codigoPix = document.getElementById("pixCode").innerText.trim();
-            if (navigator.clipboard && window.isSecureContext) {
-                navigator.clipboard.writeText(codigoPix).then(marcarCopiado).catch(() => {
-                    copiaAlternativa(codigoPix);
-                    marcarCopiado();
-                });
-            } else {
-                copiaAlternativa(codigoPix);
-                marcarCopiado();
-            }
+            if (navigator.clipboard && window.isSecureContext) navigator.clipboard.writeText(codigoPix).then(marcarCopiado).catch(() => { copiaAlternativa(codigoPix); marcarCopiado(); });
+            else { copiaAlternativa(codigoPix); marcarCopiado(); }
         }
-
         async function copiarLinkCompartilhamento() {
-            if (navigator.clipboard && window.isSecureContext) {
-                try {
-                    await navigator.clipboard.writeText(urlPagina);
-                    return true;
-                } catch (erro) {}
-            }
+            if (navigator.clipboard && window.isSecureContext) { try { await navigator.clipboard.writeText(urlPagina); return true; } catch (erro) {} }
             return copiaAlternativa(urlPagina);
         }
-
         function compartilharWhatsApp() {
             if (arquivoImagemParaCompartilhar && navigator.share && navigator.canShare && navigator.canShare({ files: [arquivoImagemParaCompartilhar] })) {
-                navigator.share({
-                    files: [arquivoImagemParaCompartilhar],
-                    text: urlPagina,
-                    title: "Doações Gotas do Vale"
-                }).catch((erro) => {
-                    if (erro.name !== "AbortError") alert("Não foi possível abrir o compartilhamento. Tente novamente ou use um navegador compatível.");
-                });
+                navigator.share({ files: [arquivoImagemParaCompartilhar], text: urlPagina, title: "Doações Gotas do Vale" }).catch((erro) => { if (erro.name !== "AbortError") alert("Não foi possível abrir o compartilhamento. Tente novamente ou use um navegador compatível."); });
                 return;
             }
-
             window.open(`https://wa.me/?text=${encodeURIComponent(urlPagina)}`, "_blank", "noopener,noreferrer");
-            alert("Este navegador não permite anexar imagens pelo compartilhamento. O link foi aberto no WhatsApp, mas para enviar a foto use um navegador compatível com compartilhamento de arquivos.");
+            alert("Este navegador não permite anexar imagens pelo compartilhamento. O link foi aberto no WhatsApp; para enviar a foto, use um navegador compatível com compartilhamento de arquivos.");
         }
-
+        function mostrarBotaoOkSePronto() {
+            if (!preparacaoInstagramConcluida || !tempoDeLeituraConcluido) return;
+            const botao = document.getElementById("instagramOkButton");
+            botao.hidden = false;
+            botao.disabled = false;
+            document.getElementById("instagramWaitMessage").textContent = "Pronto! Toque em OK para continuar.";
+            botao.focus();
+        }
         async function prepararCompartilhamentoInstagram() {
             const modal = document.getElementById("instagramModal");
             const mensagem = document.getElementById("instagramModalMessage");
             const botaoOk = document.getElementById("instagramOkButton");
+            const aviso = document.getElementById("instagramWaitMessage");
+            botaoOk.hidden = true;
             botaoOk.disabled = true;
+            aviso.textContent = "Leia as 3 instruções com atenção. O botão OK aparecerá em 3 segundos.";
             mensagem.innerHTML = '<div class="share-status">Preparando a imagem para compartilhar...</div>';
             modal.classList.add("is-open");
-            botaoOk.focus();
+            document.getElementById("instagramModalTitle").focus?.();
+            preparacaoInstagramConcluida = false;
+            tempoDeLeituraConcluido = false;
             arquivoImagemParaCompartilhar = null;
             erroPreparacaoImagem = false;
-
+            setTimeout(() => { tempoDeLeituraConcluido = true; mostrarBotaoOkSePronto(); }, 3000);
+            const instrucoes = '<ol class="share-steps"><li>Toque em <strong>OK</strong> e escolha <strong>Instagram</strong>.</li><li>Escolha onde compartilhar: <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li><li>Na legenda, <strong>cole o link</strong> que já foi copiado.</li></ol>';
             const linkCopiado = await copiarLinkCompartilhamento();
-            if (!linkCopiado) {
-                mensagem.innerHTML = '<ol class="share-steps"><li>Toque em <strong>OK</strong> e escolha <strong>Instagram</strong>.</li><li>Escolha onde compartilhar: <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li><li>cole o link na legenda.</li></ol>';
-            }
-
             try {
                 const resposta = await fetch(urlImagem);
                 if (!resposta.ok) throw new Error("Falha ao carregar imagem");
                 const imagem = await resposta.blob();
                 const arquivo = new File([imagem], "criancas-fundo.jpg", { type: imagem.type || "image/jpeg" });
-                if (!navigator.share || !navigator.canShare || !navigator.canShare({ files: [arquivo] })) {
-                    throw new Error("Compartilhamento de arquivos não suportado neste navegador");
-                }
+                if (!navigator.share || !navigator.canShare || !navigator.canShare({ files: [arquivo] })) throw new Error("Compartilhamento de arquivos não suportado neste navegador");
                 arquivoImagemParaCompartilhar = arquivo;
-                mensagem.innerHTML = '<ol class="share-steps"><li>Toque em <strong>OK</strong> e escolha <strong>Instagram</strong>.</li><li>Escolha onde compartilhar: <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li><li>cole o link na legenda.</li></ol>';
+                mensagem.innerHTML = instrucoes;
+                if (!linkCopiado) aviso.textContent = "A imagem está pronta. Copie o link da página antes de colá-lo na legenda.";
             } catch (erro) {
                 erroPreparacaoImagem = true;
-                mensagem.innerHTML = '<ol class="share-steps"><li>Toque em <strong>OK</strong> e escolha <strong>Instagram</strong>.</li><li>Escolha onde compartilhar: <strong>Story</strong>, <strong>publicação</strong> ou <strong>Reel</strong>.</li><li>cole o link na legenda.</li></ol>';
+                mensagem.innerHTML = instrucoes;
+                aviso.textContent = "As instruções estão prontas. O compartilhamento de imagem pode não ser compatível com este navegador.";
             } finally {
-                botaoOk.disabled = false;
+                preparacaoInstagramConcluida = true;
+                mostrarBotaoOkSePronto();
             }
         }
-
-        function fecharPopupInstagram() {
-            document.getElementById("instagramModal").classList.remove("is-open");
-        }
-
+        function fecharPopupInstagram() { document.getElementById("instagramModal").classList.remove("is-open"); }
         async function confirmarCompartilhamentoInstagram() {
+            if (document.getElementById("instagramOkButton").hidden) return;
             fecharPopupInstagram();
             if (erroPreparacaoImagem || !arquivoImagemParaCompartilhar) {
                 alert("Não foi possível iniciar o compartilhamento da imagem neste navegador. Abra a página em um navegador compatível com compartilhamento de arquivos e tente novamente.");
                 return;
             }
-
-            try {
-                await navigator.share({ files: [arquivoImagemParaCompartilhar], title: "Doações Gotas do Vale" });
-            } catch (erro) {
-                if (erro.name !== "AbortError") alert("O compartilhamento não foi concluído. Tente novamente.");
-            }
+            try { await navigator.share({ files: [arquivoImagemParaCompartilhar], title: "Doações Gotas do Vale" }); }
+            catch (erro) { if (erro.name !== "AbortError") alert("O compartilhamento não foi concluído. Tente novamente."); }
         }
-
-        document.getElementById("instagramModal").addEventListener("click", (evento) => {
-            if (evento.target.id === "instagramModal") fecharPopupInstagram();
-        });
-
-        document.addEventListener("keydown", (evento) => {
-            if (evento.key === "Escape") fecharPopupInstagram();
-        });
+        document.getElementById("instagramModal").addEventListener("click", (evento) => { if (evento.target.id === "instagramModal") fecharPopupInstagram(); });
+        document.addEventListener("keydown", (evento) => { if (evento.key === "Escape") fecharPopupInstagram(); });
     </script>
 </body>
 </html>
